@@ -11,6 +11,7 @@ const taxReceipt = require("./models/taxReceipt")
 
 
 const taxReceiptRouter = require('./routes/taxReceiptRouter')
+const threshRouter = require('./routes/threshRouter')
 
 
 // parse requests of content-type - application/json
@@ -25,11 +26,12 @@ app.set("view engine", "ejs");
 
 // simple route
 app.get("/", (req, res) => {
-    res.send('<h1>PINK APP</h1>')
+    res.render("entryPage")
   });
   
 //Handle user requests
 app.use('/tax-receipt', taxReceiptRouter)
+app.use('/tax-info', threshRouter)
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

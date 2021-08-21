@@ -8,4 +8,4 @@ var taxSchema = new mongoose.Schema({
  
 //Image is a model which has a schema imageSchema
 
-module.exports = new mongoose.model('Image', taxSchema);
+module.exports = new mongoose.model('taxThreshold', taxSchema);
