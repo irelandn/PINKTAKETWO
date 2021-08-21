@@ -7,16 +7,19 @@ require('./models/db');
 const taxReceiptRouter = require('./routes/taxReceiptRouter')
 const profileRouter = require('./routes/profileRouter')
 
+app.set("view engine", "ejs");
+
 // simple route
 app.get("/", (req, res) => {
     res.send('<h1>IT Project 2021 Semester 2 Capstone</h1>')
-  });
+});
   
-
+app.get('/profile', (req, res) => {
+  res.render('profileView')
+})
 
 //Handle user requests
 app.use('/tax-receipt', taxReceiptRouter)
-
 app.use('/profile', profileRouter)
 app.use('/profile/job', profileRouter)
 

@@ -3,7 +3,8 @@ const mongoose = require("mongoose")
 // Set paramaters?
 
 // Link to Job Model
-const Job = mongoose.model("Job")
+//const Job = mongoose.model("Job")
+const Job = require("../models/job");
 
 //          functions         //
 
@@ -23,18 +24,6 @@ const deleteJob  =async (req, res) => {
     //do nothing
 }
 
-const jobSchema = new Schema({
-    user_id: {type: String, required: true},
-    job_title: {type: String, required: true},
-    company_name: {type: String, required: false},
-    role: {type: String, required: false},
-    // pay rates will be stored in dollars per hour
-    standard_pay_rate: {type: Number, required: true},
-    pay_period: {
-        type: String, 
-        enum: ["WEEKLY", "FORTNIGHTLY", "SEMIMONTHLY", "MONTHLY"], 
-        default: "FORTNIGHTLY"}
-})
 const getAllJobs = async (req, res) => {
     try {
         // find all jobs associated with the user 
@@ -61,4 +50,4 @@ const getOneJob = async (req, res) => {
 }
 
 // Export the functions provided by the controller
-module.exports = {}
+module.exports = {createJob}

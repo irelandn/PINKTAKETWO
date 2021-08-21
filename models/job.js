@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
-const Schema = mongoose.Schema;
+var Schema = mongoose.Schema;
 
-const jobSchema = new Schema({
+var jobSchema = new Schema({
     user_id: {type: String, required: true},
     job_title: {type: String, required: true},
     company_name: {type: String, required: false},
@@ -14,6 +14,6 @@ const jobSchema = new Schema({
         default: "FORTNIGHTLY"}
 })
 
-const Job = mongoose.model("Job", jobSchema)
+const Job = mongoose.model("Job", jobSchema, "Job")
 
-module.exports =Job
+module.exports ={Job}

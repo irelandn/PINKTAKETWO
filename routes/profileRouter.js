@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const profileRouter = express.Router();
+const jobController = require("../controllers/jobController")
 
 const urlencodedParser = bodyParser.urlencoded({extended: false})
 
@@ -12,7 +13,8 @@ profileRouter.get("/", (req, res) => {
 
 // handle user posts
 profileRouter.post('/', urlencodedParser, (req, res) => {
-    console.log(req.body);
+    //console.log(req.body);
+    jobController.createJob(req, res)
 })
 
 module.exports = profileRouter;

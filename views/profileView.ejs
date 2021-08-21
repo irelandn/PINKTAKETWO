@@ -1,17 +1,28 @@
 <h1>Your Profile!</h1>
-<div>
+<div class="container">
     <h1>Add a new job!</h1>
 
     <form id="new-job-form" method="POST" action="/profile">
-        <label for="job-title">Job title</label>
-        <input type=text name="job-title">
-        <label for="pay">What is your pay and rate?</label>
-        <input type=text name="pay">
-        <input type=text name="period">
-        <label for="company-name">Company name</label>
-        <input type=text name="company-name">
-        <label for="role">What is your role?</label>
-        <input type=text name="role">
+        <div>
+            <label for="job-title" class="form-label">Job title</label>
+            <input type=text name="job-title" class="form-control">
+        </div>
+        <div>
+            <label for="pay" class="form-label">What is your pay and rate?</label>
+            <input type=text name="pay" class="form-control">
+            <input type=text name="period" class="form-control">
+        </div>
+        <div>
+            <label for="company-name" class="form-label">Company name</label>
+            <input type=text name="company-name" class="form-control">
+        </div>
+        <div>
+            <label for="role" class="form-label">What is your role?</label>
+            <input type=text name="role" class="form-control">
+        </div>
+        <div>
+            <button type="submit">Submit</button>
+        </div>
 
     </form>
 </div>
