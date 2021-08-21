@@ -1,28 +1,46 @@
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 <h1>Your Profile!</h1>
+
 <div class="container">
     <h1>Add a new job!</h1>
 
-    <form id="new-job-form" method="POST" action="/profile">
-        <div>
-            <label for="job-title" class="form-label">Job title</label>
-            <input type=text name="job-title" class="form-control">
-        </div>
-        <div>
-            <label for="pay" class="form-label">What is your pay and rate?</label>
-            <input type=text name="pay" class="form-control">
-            <input type=text name="period" class="form-control">
-        </div>
-        <div>
-            <label for="company-name" class="form-label">Company name</label>
-            <input type=text name="company-name" class="form-control">
-        </div>
-        <div>
-            <label for="role" class="form-label">What is your role?</label>
-            <input type=text name="role" class="form-control">
-        </div>
-        <div>
-            <button type="submit">Submit</button>
-        </div>
+    <div class="col-md-6">
+        <form id="new-job-form" method="POST" action="/profile">
+            <div>
+                <label for="job-title" class="form-label">Job title</label>
+                <input type=text name="job-title" class="form-control">
+            </div>
+            <div>
+                <label for="pay" class="form-label">Gross pay</label>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <input type=text name="pay" class="form-control">
+                    
+                </div>
 
-    </form>
+                <div class="col-md-2">
+                    <select for="period" class="custom-select">
+                        <option selected default="hourly"></option>
+                        <option value="hourly">Hourly (wage)</option>
+                        <option value="fortnightly">Fortnightly</option>
+                        <option value="yearly">Yearly (salary)</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <label for="company-name" class="form-label">Company name</label>
+                <input type=text name="company-name" class="form-control">
+            </div>
+            <div>
+                <label for="role" class="form-label">Role</label>
+                <input type=text name="role" class="form-control">
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
 </div>
