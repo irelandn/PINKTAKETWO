@@ -3,15 +3,12 @@
 var mongoose = require('mongoose');
  
 var taxReceiptSchema = new mongoose.Schema({
-    name: String,
-    date: String,
-    img:
-    {
+    image: {
         data: Buffer,
         contentType: String
     }
 });
  
 //Image is a model which has a schema imageSchema
-const taxReceipt = mongoose.model("taxReceipt", taxReceiptSchema, "taxReceipt")
-module.exports = {taxReceipt}
+const allReceipts = mongoose.model("allReceipts", taxReceiptSchema)
+module.exports = allReceipts
