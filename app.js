@@ -1,7 +1,12 @@
+require('rootpath')();
+const cors = require('cors');
+const jwt = require('./models/jwt');
 const express = require('express')
 const app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose')
+const errorHandler = require('./models/error-handler');
+
 require('./models/db');
 const fs = require("fs");
 const multer = require("multer");
@@ -10,7 +15,9 @@ const path = require('path')
 const taxReceipt = require("./models/taxReceipt")
 
 
+
 const taxReceiptRouter = require('./routes/taxReceiptRouter')
+const threshRouter = require('./routes/threshRouter')
 
 
 // parse requests of content-type - application/json
@@ -23,13 +30,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
 
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cors());
+app.use(jwt());
+app.use('/users', require('./routes/userRouter'));
+app.use(errorHandler);
+
 // simple route
 app.get("/", (req, res) => {
-    res.send('<h1>PINK APP</h1>')
+    res.render("entryPage")
   });
   
 //Handle user requests
 app.use('/tax-receipt', taxReceiptRouter)
+app.use('/tax-info', threshRouter)
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
