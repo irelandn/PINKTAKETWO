@@ -1,5 +1,6 @@
 require('dotenv').config()
 const mongoose = require("mongoose")
+mongoose.Promise = global.Promise;
 
 // Connect to MongoDB -database login is retrieved from environment variables -YOU SHOULD USE YOUR OWN ATLAS CLUSTER
 CONNECTION_STRING="mongodb+srv://pink:pink@cluster0.dmj7x.mongodb.net/PinkTax?retryWrites=true&w=majority"
@@ -12,7 +13,6 @@ mongoose.connect(MONGO_URL || "mongodb://localhost", {
     useFindAndModify: false,
     dbName: "PinkTax"
 })
-
 const db = mongoose.connection
     
 db.on("error", err => {
@@ -23,5 +23,7 @@ db.on("error", err => {
 db.once("open", async () => {
     console.log("Mongo connection started on " + db.host + ":" + db.port)
 })
+module.exports = {
+    User: require('../models/user')
+};
 
-require("./user")

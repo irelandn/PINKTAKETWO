@@ -1,13 +1,19 @@
+require('rootpath')();
+const cors = require('cors');
+const jwt = require('./models/jwt');
 const express = require('express')
 const app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose')
+const errorHandler = require('./models/error-handler');
+
 require('./models/db');
 const fs = require("fs");
 const multer = require("multer");
 const path = require('path')
 
 const taxReceipt = require("./models/taxReceipt")
+
 
 
 const taxReceiptRouter = require('./routes/taxReceiptRouter')
@@ -23,6 +29,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Set EJS as templating engine
 app.set("view engine", "ejs");
 
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cors());
+app.use(jwt());
+app.use('/users', require('./routes/userRouter'));
+app.use(errorHandler);
 
 // simple route
 app.get("/", (req, res) => {

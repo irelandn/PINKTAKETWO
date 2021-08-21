@@ -1,31 +1,77 @@
-const mongoose = require("mongoose")
-// import User model
-const User = mongoose.model("User")
-// get all Users
-const getAllUsers = async (req, res) => {
-    try {
-        const Users = await User.find()
-        return res.send(Users)
-    } 
-    catch (err) 
-    {
-        res.status(400)
-        return res.send("Database query failed")
+﻿const config = require('config.json');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+const db = require('../models/db');
+const User = db.User;
+
+module.exports = {
+    authenticate,
+    getAll,
+    getById,
+    create,
+    update,
+    delete: _delete
+};
+
+async function authenticate({ username, password }) {
+    const user = await User.findOne({ username });
+    if (user && bcrypt.compareSync(password, user.hash)) {
+        const token = jwt.sign({ sub: user.id }, "PinkTaxSecret", { expiresIn: '7d' });
+        return {
+            ...user.toJSON(),
+            token
+        };
     }
 }
 
-// find one User by their id
-const getOneUser = async (req, res) => {  
-    try {
-        const oneUser = await User.findOne( {first_name: req.params.first_name}).lean()
-        if (oneUser === null) {   // no User found in database
-            res.status(404)
-            return res.send("User not found")
-        }
-        return res.send(oneUser)  // User was found
-    } catch (err) {     // error occurred
-        res.status(400)
-        return res.send("Database query failed")
+async function getAll() {
+    return await User.find();
+}
+
+async function getById(id) {
+    return await User.findById(id);
+}
+
+async function create(userParam) {
+    // validate
+    if (await User.findOne({ username: userParam.username })) {
+        throw 'Username "' + userParam.username + '" is already taken';
     }
-}// remember to export the functions
-module.exports = {getAllUsers,getOneUser}
+    if (!(userParam.first_name && userParam.last_name && userParam.username && userParam.password)) {
+        res.status(400).send("All input is required");
+      }
+
+    const user = new User(userParam);
+
+    // hash password
+    if (userParam.password) {
+        user.hash = bcrypt.hashSync(userParam.password, 10);
+    }
+
+    // save user
+    await user.save();
+}
+
+async function update(id, userParam) {
+    const user = await User.findById(id);
+
+    // validate
+    if (!user) throw 'User not found';
+    if (user.username !== userParam.username && await User.findOne({ username: userParam.username })) {
+        throw 'Username "' + userParam.username + '" is already taken';
+    }
+
+    // hash password if it was entered
+    if (userParam.password) {
+        userParam.hash = bcrypt.hashSync(userParam.password, 10);
+    }
+
+    // copy userParam properties to user
+    Object.assign(user, userParam);
+
+    await user.save();
+}
+
+async function _delete(id) {
+    await User.findByIdAndRemove(id);
+}
