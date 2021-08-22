@@ -4,7 +4,9 @@ const mongoose = require("mongoose")
 
 // Link to Job Model
 //const Job = mongoose.model("Job")
-const Job = require("../models/job");
+//const Job = require("../models/job");
+const db = require('../models/db');
+const Job = db.Job;
 
 //          functions         //
 
@@ -12,12 +14,17 @@ const Job = require("../models/job");
 
 //          requests         //
 
-const createJob = async (req, res) => {
-    const newJob = new Job({
-        user_id: req.params.user_id,
-        job_title: req.params.job_title,
-        standard_pay_rate: req.params.standard_pay_rate,
-    })
+const createJob = async (params) => {
+    // add check that the job doesn't already exist
+    // const newJob = new Job({
+    //     user_id: req.params.user_id,
+    //     job_title: req.params.job_title,
+    //     standard_pay_rate: req.params.standard_pay_rate,
+    // })
+    const newJob = new Job(params)
+
+    await newJob.save();
+
 }
 
 const deleteJob  =async (req, res) => {
