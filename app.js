@@ -16,6 +16,8 @@ const taxReceipt = require("./models/taxReceipt")
 
 
 
+
+const profileRouter = require('./routes/profileRouter')
 const taxReceiptRouter = require('./routes/taxReceiptRouter')
 const threshRouter = require('./routes/threshRouter')
 
@@ -45,10 +47,19 @@ app.get("/", (req, res) => {
   app.get("/login", (req, res) => {
     res.render("login")
   });
+
+  
+  app.get('/profile', (req, res) => {
+    res.render('profileView')
+  })
   
 //Handle user requests
 app.use('/tax-receipt', taxReceiptRouter)
 app.use('/tax-info', threshRouter)
+app.use('/profile', profileRouter)
+app.use('/profile/job', profileRouter)
+  
+
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -68,6 +79,7 @@ const upload = multer({ storage: storage });
 app.get("/test",  (req, res) => {
     res.render("upload");
 });
+
 
 app.post("/uploadPhoto", upload.single("myImage"), (req, res) => {
     const obj = {
