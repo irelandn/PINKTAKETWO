@@ -37,7 +37,7 @@ const upload = multer({
   }
 }) 
 
-taxReceiptRouter.get('/', (req, res) => {
+taxReceiptRouter.get('/receipts', (req, res) => {
     taxReceipt.find({}, (err, items) => {
         if (err) {
             console.log(err);
@@ -65,7 +65,7 @@ taxReceiptRouter.post('/uploads', upload.single('image'), (req, res) => {
         }
         else {
             item.save();
-            res.redirect('/all');
+            res.redirect('/receipts');
         }
     });
   });
